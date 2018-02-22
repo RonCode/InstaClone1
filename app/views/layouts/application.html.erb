@@ -13,6 +13,7 @@
   
   <body>
     
+    <!--flash alerts | alert_for(name) found in application_helper.rb -->
     <div class="container">
       <% flash.each do |name, msg| %>
         <%= content_tag :div, msg, class: [:alert, alert_for(name)] %>
