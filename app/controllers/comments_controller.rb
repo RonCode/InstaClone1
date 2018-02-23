@@ -6,8 +6,12 @@ class CommentsController < ApplicationController
     @comment.user_id = current_user.id # assign the new comment to the current user
     
     if @comment.save
-      flash[:success] = "Your comment has been created!"
-      redirect_to root_path
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js
+      end
+      # flash[:success] = "Your comment has been created!"
+      # redirect_to root_path
     else
       flash.now[:alert] = "Your new comment couldn't be created! Please check the form."
       render root_path
@@ -22,13 +26,17 @@ class CommentsController < ApplicationController
   
   # def update
   # end
-  
+
   def destroy
     @comment = @post.comments.find(params[:id])
-    
-    @comment.destroy
-    flash[:success] = "comment deleted"
-    redirect_to root_path
+
+    if @comment.user_id == current_user.id
+      @comment.delete
+      respond_to do |format|
+        format.html { redirect_to root_path }
+        format.js
+      end
+    end
   end
   
   private
