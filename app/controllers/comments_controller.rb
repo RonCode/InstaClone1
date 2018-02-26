@@ -18,8 +18,6 @@ class CommentsController < ApplicationController
         format.html { redirect_to root_path }
         format.js
       end
-      # flash[:success] = "Your comment has been created!"
-      # redirect_to root_path
     else
       flash.now[:alert] = "Your new comment couldn't be created! Please check the form."
       render root_path
