@@ -1,37 +1,44 @@
 class ProfilesController < ApplicationController
   before_action :authenticate_user!
-  # before_action :set_post, only: [:show, :edit, :update, :destroy]
-  # before_action :owned_post, only: [:edit, :update, :destroy]
+  before_action :set_user, only: [:show, :edit, :update]
+  before_action :owned_profile, only: [:edit, :update]
   
   def show
-    @user = User.find_by(user_name: params[:user_name])
+    #before_action
     @posts = User.find_by(user_name: params[:user_name]).posts.order('created_at DESC')
   end
   
   def edit
-    @user = User.find_by(user_name: params[:user_name])
     #before_action
   end
   
   def update
-    
+    #before_action
+    if @user.update(profile_params)
+      flash[:success] = 'Your profile has been updated.'
+      redirect_to profile_path(@user.user_name)
+    else
+      @user.errors.full_messages
+      flash[:error] = @user.errors.full_messages
+      render :edit
+    end
   end
   
   
   private
-    def post_params
-      params.require(:post).permit(:image, :caption)
+    def profile_params
+      params.require(:user).permit(:avatar, :bio)
     end
   
-    # def set_post
-    #   @post = Post.find(params[:id])
-    # end
+    def set_user
+      @user = User.find_by(user_name: params[:user_name])
+    end
     
-    # def owned_post
-    #   unless current_user == @post.user
-    #     flash[:alert] = "That post doesn't belong to you!"
-    #     redirect_to root_path
-    #   end
-    # end
+    def owned_profile
+      unless current_user == @user.user_name
+        flash[:alert] = "That profile doesn't belong to you!"
+        redirect_to root_path
+      end
+    end
   
 end
