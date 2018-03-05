@@ -15,3 +15,10 @@ def profile_avatar_select(user)
   image_tag 'default-avatar.jpg', id: 'image-preview',
                                   class: 'img-responsive img-circle profile-image'
 end
+
+def form_image_select(post)
+  return image_tag post.image.url(:medium),
+                   id: 'image-preview',
+                   class: 'img-responsive' if post.image.exists?
+  image_tag 'placeholder.jpg', id: 'image-preview', class: 'img-responsive'
+end

@@ -2,6 +2,7 @@
   <div class="post">
     <div class="post-body">
       <div class="image-wrap">
+        <!--/ calls from application_helper-->
         <%= form_image_select(@post) %>
         <%= simple_form_for @post, html: { multipart: true } do |f| %>
           <div class="row">
@@ -11,7 +12,8 @@
           </div>
           <div class="container-fluid">
             <div class="form-group text-center">
-              <h4>Upload an image:</h4>
+              <h4>Upload an image (this is required):</h4>
+              <!--/ loadFile(event) load JS from assets/javascripts/posts.js -->
               <%= f.input :image, label: false, input_html: { onChange: 'loadFile(event)' } %>
             </div>
             <div class="form-group text-center">
