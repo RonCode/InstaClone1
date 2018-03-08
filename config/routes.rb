@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   
   resources :posts do
     resources :comments
+    member do
+      get 'like'
+    end
   end
   
   # dynamic parameter to show user name in the url instead of id

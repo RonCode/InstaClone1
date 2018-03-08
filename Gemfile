@@ -25,6 +25,7 @@ gem 'jquery-rails'
 gem 'devise'
 gem 'kaminari'
 gem 'jquery-turbolinks'
+gem 'acts_as_votable', '~> 0.11.1'
 
 
 # Use CoffeeScript for .coffee assets and views
