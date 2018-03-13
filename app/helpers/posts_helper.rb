@@ -6,25 +6,14 @@ module PostsHelper
   end
 
   def liked_post(post)
-    if current_user.voted_for? post
-      return link_to '', 
-          unlike_post_path(post), 
-          remote: true, 
-          id: "like_#{post.id}", 
-          class: "glyphicon glyphicon-heart"
-    else
-      link_to '', 
-          like_post_path(post),
-          remote: true, 
-          id: "like_#{post.id}", 
-          class: "glyphicon glyphicon-heart-empty" 
-    end
+    return 'glyphicon-heart' if current_user.voted_for? post
+    'glyphicon-heart-empty'
   end
 
   private
     def list_likers(votes)
       user_names = []
-      unless votes.blank?
+      if !votes.blank?
         votes.voters.each do |voter|
           user_names.push(link_to voter.user_name,
                                   profile_path(voter.user_name),
